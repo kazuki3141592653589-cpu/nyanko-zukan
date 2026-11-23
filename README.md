@@ -3184,6 +3184,17 @@ function removeCurrentFormSlot() {
     ).catch(console.error);
   }
 
+  const searchInput =
+    document.getElementById("searchInput") ||
+    document.getElementById("searchBox") ||
+    document.querySelector('input[type="search"]') ||
+    document.querySelector('input[placeholder*="検索"]');
+  if (searchInput) {
+    searchInput.value = newUnit.name;
+    searchInput.dispatchEvent(new Event("input", { bubbles: true }));
+    searchInput.dispatchEvent(new Event("change", { bubbles: true }));
+  }
+
   if (typeof renderApp === "function") renderApp();
   if (typeof renderList === "function") renderList();
   if (typeof updateList === "function") updateList();
