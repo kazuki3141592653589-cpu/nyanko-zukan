@@ -993,16 +993,15 @@
 
   <script>
     // =========================================================================
-    // 0-A. Firebase Firestore 設定（ご自身のFirebaseプロジェクト設定を貼り付け）
-    // =========================================================================
-    const FIREBASE_CONFIG = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "adpgjn.firebaseapp.com",
-      projectId: "adpgjn",
-      storageBucket: "adpgjn.firebasestorage.app",
-      messagingSenderId: "YOUR_SENDER_ID",
-      appId: "YOUR_APP_ID"
-    };
+    // 0-A. Firebase Firestore 設定（ご自身のFirebaseプロジェクト設定を貼り
+      const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyDN5Y2t4I18nJPN-xCULDMKwGJf7Kf8s2M",
+  authDomain: "adpgjn.firebaseapp.com",
+  projectId: "adpgjn",
+  storageBucket: "adpgjn.firebasestorage.app",
+  messagingSenderId: "693644624750",
+  appId: "1:693644624750:web:2349c66daf47948d53777f"
+}; 
 
     const FIRESTORE_COLLECTION = "nyanko_zukan";
     const FIRESTORE_DOC_ID = "overrides_v1";
