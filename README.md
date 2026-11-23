@@ -934,8 +934,6 @@
           <button type="button" class="btn" onclick="clearEdAbilities()">能力全消去</button>
 <button type="button" class="btn" onclick="addNewFormSlot()">＋形態追加</button>
 <button type="button" class="btn" onclick="removeCurrentFormSlot()">－形態削除</button>
-<button type="button" class="btn" onclick="createNewUnitEntry()">＋キャラ追加</button>
-<button type="button" class="btn" onclick="deleteCurrentUnitEntry()">キャラ削除</button>
         </div>
       </div>
     </div>
