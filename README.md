@@ -686,8 +686,9 @@
       </div>
       <div class="header-btns">
         <button type="button" class="btn btn-gold" onclick="openCiteModal()">引用元・仕様</button>
-        <button type="button" class="btn" onclick="openBulkModal()">CSV / TSV入出力</button>
-        <button type="button" class="btn btn-dark admin-only" onclick="openFirstFilteredEdit()">+ 数値編集</button>
+        <button type="button" class="btn" onclick="openBulkModal()">CSV / TSV入出力　　　　　　　　</button>
+<button type="button" class="btn btn-dark admin-only" onclick="createNewUnitEntry()">＋ キャラ追加</button>
+              <button type="button" class="btn btn-dark admin-only" onclick="deleteCurrentUnitEntry()">キャラ削除</button>
       </div>
     </div>
   </header>
@@ -3121,30 +3122,20 @@
   const el = document.getElementById("edAbilities");
   if (el) el.value = "";
 }
+
 function addNewFormSlot() {
   const nameEl = document.getElementById("edName");
   const cur = (nameEl?.value || "").trim();
   const next = (window.__adminFormIndex || 0) + 1;
   window.__adminFormIndex = next;
-  if (nameEl) nameEl.value = cur ? `${cur} (第${next + 1}形態)` : `第${next + 1}形態`;
+  if (nameEl) {
+    nameEl.value = cur ? `${cur} (第${next + 1}形態)` : `第${next + 1}形態`;
+  }
 }
+
 function removeCurrentFormSlot() {
   const idx = window.__adminFormIndex || 0;
   if (idx > 0) window.__adminFormIndex = idx - 1;
-}
-function createNewUnitEntry() {
-  window.__isCreatingNewUnit = true;
-  const n = document.getElementById("edName");
-  const h = document.getElementById("edHp");
-  const a = document.getElementById("edAtk");
-  const ab = document.getElementById("edAbilities");
-  if (n) n.value = "新キャラ";
-  if (h) h.value = "1000";
-  if (a) a.value = "200";
-  if (ab) ab.value = "";
-}
-function deleteCurrentUnitEntry() {
-  window.__deleteCurrentUnitRequested = true;
 }
   </script>
 </body>
