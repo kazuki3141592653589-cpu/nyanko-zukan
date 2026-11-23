@@ -3135,6 +3135,88 @@ function removeCurrentFormSlot() {
   const idx = window.__adminFormIndex || 0;
   if (idx > 0) window.__adminFormIndex = idx - 1;
 }
+    function createNewUnitEntry() {
+  const name = prompt("追加するキャラ名を入力してください", "新キャラ");
+  if (!name || !name.trim()) return;
+
+  const hpBase = Number(prompt("Lv.1 体力（基礎値）を入力してください", "1000")) || 1000;
+  const atkBase = Number(prompt("Lv.1 攻撃力（基礎値）を入力してください", "200")) || 200;
+
+  const newUnit = {
+    id: "custom_" + Date.now(),
+    name: name.trim(),
+    hpBase: hpBase,
+    atkBase: atkBase,
+    hp: hpBase,
+    atk: atkBase,
+    kb: 1,
+    range: 110,
+    speed: 10,
+    cost: 50,
+    cooldown: 60,
+    area: "範囲攻撃",
+    traits: [],
+    abilities: [],
+    forms: [{ name: name.trim(), hpBase: hpBase, atkBase: atkBase }],
+    isCustom: true
+  };
+
+  window.__customUnits = Array.isArray(window.__customUnits) ? window.__customUnits : [];
+  window.__customUnits.push(newUnit);
+
+  if (typeof UNITS !== "undefined" && Array.isArray(UNITS)) UNITS.push(newUnit);
+  if (typeof allUnits !== "undefined" && Array.isArray(allUnits)) allUnits.push(newUnit);
+  if (typeof state !== "undefined" && state && Array.isArray(state.units)) state.units.push(newUnit);
+
+  const edName = document.getElementById("edName");
+  const edHp = document.getElementById("edHp");
+  const edAtk = document.getElementById("edAtk");
+  const edAb = document.getElementById("edAbilities");
+  if (edName) edName.value = newUnit.name;
+  if (edHp) edHp.value = String(newUnit.hpBase);
+  if (edAtk) edAtk.value = String(newUnit.atkBase);
+  if (edAb) edAb.value = "";
+
+  if (typeof db !== "undefined" && db && typeof FIRESTORE_COLLECTION !== "undefined" && typeof FIRESTORE_DOC_ID !== "undefined") {
+    db.collection(FIRESTORE_COLLECTION).doc(FIRESTORE_DOC_ID).set(
+      { customUnits: window.__customUnits, updatedAt: Date.now() },
+      { merge: true }
+    ).catch(console.error);
+  }
+
+  if (typeof renderApp === "function") renderApp();
+  if (typeof renderList === "function") renderList();
+  if (typeof updateList === "function") updateList();
+
+  alert(`「${newUnit.name}」を追加したよ！`);
+}
+
+function deleteCurrentUnitEntry() {
+  const edName = document.getElementById("edName");
+  const targetName = (edName?.value || "").trim() || "現在のキャラ";
+  if (!confirm(`「${targetName}」を削除しますか？`)) return;
+
+  window.__customUnits = Array.isArray(window.__customUnits) ? window.__customUnits : [];
+  window.__deletedUnitIds = Array.isArray(window.__deletedUnitIds) ? window.__deletedUnitIds : [];
+
+  const targetId = window.__currentEditingUnitId || targetName;
+  window.__customUnits = window.__customUnits.filter(u => u.id !== targetId && u.name !== targetName);
+  if (!window.__deletedUnitIds.includes(targetId)) {
+    window.__deletedUnitIds.push(targetId);
+  }
+
+  if (typeof db !== "undefined" && db && typeof FIRESTORE_COLLECTION !== "undefined" && typeof FIRESTORE_DOC_ID !== "undefined") {
+    db.collection(FIRESTORE_COLLECTION).doc(FIRESTORE_DOC_ID).set(
+      { customUnits: window.__customUnits, deletedUnitIds: window.__deletedUnitIds, updatedAt: Date.now() },
+      { merge: true }
+    ).catch(console.error);
+  }
+  if (typeof renderApp === "function") renderApp();
+  if (typeof renderList === "function") renderList();
+  if (typeof updateList === "function") updateList();
+
+  alert(`「${targetName}」を削除したよ！`);
+}
   </script>
 </body>
 </html>
