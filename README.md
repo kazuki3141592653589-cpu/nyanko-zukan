@@ -930,6 +930,11 @@
         </div>
         <div style="margin-top:8px; display:flex; justify-content:flex-end; gap:6px;">
           <button type="button" class="btn btn-crimson" onclick="saveUnitEdit()">保存して全員に反映</button>
+          <button type="button" class="btn" onclick="clearEdAbilities()">能力全消去</button>
+<button type="button" class="btn" onclick="addNewFormSlot()">＋形態追加</button>
+<button type="button" class="btn" onclick="removeCurrentFormSlot()">－形態削除</button>
+<button type="button" class="btn" onclick="createNewUnitEntry()">＋キャラ追加</button>
+<button type="button" class="btn" onclick="deleteCurrentUnitEntry()">キャラ削除</button>
         </div>
       </div>
     </div>
@@ -3112,6 +3117,35 @@
           `<div class="panel" style="color:#b91c1c; font-weight:900;">初期化エラー: ${err.message}</div>`;
       }
     })();
+    function clearEdAbilities() {
+  const el = document.getElementById("edAbilities");
+  if (el) el.value = "";
+}
+function addNewFormSlot() {
+  const nameEl = document.getElementById("edName");
+  const cur = (nameEl?.value || "").trim();
+  const next = (window.__adminFormIndex || 0) + 1;
+  window.__adminFormIndex = next;
+  if (nameEl) nameEl.value = cur ? `${cur} (第${next + 1}形態)` : `第${next + 1}形態`;
+}
+function removeCurrentFormSlot() {
+  const idx = window.__adminFormIndex || 0;
+  if (idx > 0) window.__adminFormIndex = idx - 1;
+}
+function createNewUnitEntry() {
+  window.__isCreatingNewUnit = true;
+  const n = document.getElementById("edName");
+  const h = document.getElementById("edHp");
+  const a = document.getElementById("edAtk");
+  const ab = document.getElementById("edAbilities");
+  if (n) n.value = "新キャラ";
+  if (h) h.value = "1000";
+  if (a) a.value = "200";
+  if (ab) ab.value = "";
+}
+function deleteCurrentUnitEntry() {
+  window.__deleteCurrentUnitRequested = true;
+}
   </script>
 </body>
 </html>
