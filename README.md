@@ -1065,7 +1065,7 @@
     // =========================================================================
     // 0-B. 管理者ロック設定 (初期パスコード: "kazuki888" の SHA-256 ハッシュ)
     // =========================================================================
-    const ADMIN_PASS_HASH = "e6916b87792b2bc23015f4e8e383688996215c2586c1660417f70b86819660a7";
+    const ADMIN_PASS_HASH = "8b5e282c89f02c400c44f1b42f4fe9c9534adc616047a6551542061fb6a94983";
     const ADMIN_SESSION_KEY = "nyanko_zukan_admin_unlocked_v1";
 
     function isAdminUnlocked() {
