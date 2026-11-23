@@ -2,8 +2,8 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>にゃんこ大戦争 公式ステータス図鑑 (No.001〜888 完全収録)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>にゃんこ大戦争 ステータス図鑑 (No.001〜888 完全収録)</title>
   <!-- Firebase SDK (Compat版: 単一HTMLでそのまま動作) -->
   <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
@@ -24,17 +24,21 @@
     * {
       box-sizing: border-box;
       -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
     }
 
     html, body {
       margin: 0;
       padding: 0;
       width: 100%;
+      max-width: 100vw;
+      overflow-x: hidden;
       min-height: 100%;
       background-color: var(--bg-page);
       color: var(--ink);
       font-family: -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", Meiryo, sans-serif;
       line-height: 1.45;
+      -webkit-text-size-adjust: 100%;
     }
 
     /* 管理者モードOFF時は編集UIを非表示 */
@@ -77,11 +81,11 @@
       color: #f5f5f4;
     }
 
-    /* ヘッダー（モバイルプレビュー左上の × ボタン重なり防止の左パディング付き） */
+    /* ヘッダー */
     .app-header {
       background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
       border-bottom: 3px solid var(--ink);
-      padding: 12px 12px 12px 58px;
+      padding: 12px 12px 12px 54px;
       box-shadow: 0 3px 0 rgba(43, 34, 24, 0.25);
     }
 
@@ -97,7 +101,7 @@
 
     .app-title {
       margin: 0;
-      font-size: 16px;
+      font-size: 15.5px;
       font-weight: 900;
       color: var(--ink);
       letter-spacing: -0.02em;
@@ -120,6 +124,7 @@
 
     .container {
       max-width: 1200px;
+      width: 100%;
       margin: 0 auto;
       padding: 10px 10px 32px;
       display: flex;
@@ -131,9 +136,9 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 6px 11px;
+      padding: 6px 10px;
       min-height: 34px;
-      font-size: 11.5px;
+      font-size: 11px;
       font-weight: 900;
       border: 2px solid var(--ink);
       border-radius: 10px;
@@ -174,8 +179,9 @@
       background: var(--bg-card);
       border: 2.5px solid var(--ink);
       border-radius: 14px;
-      padding: 11px 12px;
+      padding: 10px 11px;
       box-shadow: 0 3px 0 var(--ink);
+      width: 100%;
     }
 
     .panel-head {
@@ -191,9 +197,10 @@
 
     .panel-title {
       display: flex;
+      flex-wrap: wrap;
       align-items: center;
-      gap: 6px;
-      font-size: 13px;
+      gap: 5px;
+      font-size: 12.5px;
       font-weight: 900;
     }
 
@@ -205,9 +212,10 @@
       font-weight: 900;
       padding: 2px 7px;
       border-radius: 6px;
+      white-space: nowrap;
     }
 
-    /* 検索・フォーム */
+    /* 検索・フォーム（iOSズーム防止のためfont-size 16px維持） */
     .search-row {
       display: flex;
       flex-wrap: wrap;
@@ -216,7 +224,7 @@
     }
 
     .search-field {
-      flex: 1 1 210px;
+      flex: 1 1 100%;
       position: relative;
       display: flex;
       align-items: center;
@@ -224,9 +232,9 @@
 
     .input-box, .select-box {
       width: 100%;
-      min-height: 36px;
+      min-height: 38px;
       padding: 6px 10px;
-      font-size: 12.5px;
+      font-size: 16px;
       font-weight: 800;
       color: var(--ink);
       background: #ffffff;
@@ -243,13 +251,14 @@
       border-radius: 7px;
       font-size: 11px;
       font-weight: 900;
-      padding: 3px 7px;
+      padding: 4px 8px;
       cursor: pointer;
     }
 
     .seg-group {
       display: inline-flex;
       flex-wrap: wrap;
+      max-width: 100%;
       border: 2px solid var(--ink);
       border-radius: 10px;
       overflow: hidden;
@@ -261,11 +270,12 @@
       border-right: 1.5px solid var(--ink);
       background: transparent;
       color: var(--ink);
-      font-size: 11px;
+      font-size: 10.5px;
       font-weight: 900;
-      padding: 6px 9px;
+      padding: 6px 8px;
       min-height: 32px;
       cursor: pointer;
+      white-space: nowrap;
     }
 
     .seg-btn:last-child {
@@ -304,7 +314,7 @@
       color: var(--ink);
       font-size: 11px;
       font-weight: 800;
-      padding: 5px 9px;
+      padding: 5px 8px;
       min-height: 30px;
       cursor: pointer;
     }
@@ -327,7 +337,7 @@
     /* レベル・お宝・本能計算機 */
     .slider-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 8px;
     }
 
@@ -370,7 +380,7 @@
 
     .calc-opt-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
+      grid-template-columns: repeat(2, 1fr);
       gap: 6px;
       margin-top: 8px;
     }
@@ -378,12 +388,12 @@
     .opt-pill {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
       background: #ffffff;
       border: 1.5px solid var(--ink);
       border-radius: 9px;
-      padding: 5px 8px;
-      font-size: 11px;
+      padding: 5px 7px;
+      font-size: 10.5px;
       font-weight: 800;
       cursor: pointer;
     }
@@ -391,7 +401,7 @@
     /* カード一覧（各カード内第1〜第4形態クイックタブ付き） */
     .cards-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
       gap: 10px;
     }
 
@@ -450,13 +460,13 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 4px;
-      font-size: 10.5px;
+      font-size: 10px;
       font-weight: 800;
       color: var(--ink-sub);
       background: #fffdf8;
       border: 1px solid #d6c6aa;
       border-radius: 8px;
-      padding: 5px 7px;
+      padding: 5px 6px;
     }
 
     .tag-row {
@@ -552,7 +562,7 @@
       background: var(--bg-card);
       border: 2px solid var(--ink);
       border-radius: 12px;
-      padding: 8px 12px;
+      padding: 8px 10px;
       box-shadow: 0 2px 0 var(--ink);
     }
 
@@ -586,7 +596,7 @@
 
     .detail-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
       gap: 6px;
       margin-top: 8px;
     }
@@ -611,7 +621,7 @@
 
     .form-edit-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(125px, 1fr));
       gap: 6px;
       margin-top: 8px;
     }
@@ -628,7 +638,7 @@
       border: 1.5px solid var(--ink);
       border-radius: 7px;
       padding: 5px 7px;
-      font-size: 12px;
+      font-size: 16px;
       font-weight: 800;
       background: #fff;
     }
@@ -663,6 +673,7 @@
       font-size: 12px;
       font-weight: 900;
       display: none;
+      white-space: nowrap;
     }
   </style>
 </head>
@@ -688,7 +699,7 @@
         <div class="panel-title">
           <span class="badge-stamp">検索・形態</span>
           <span>表示キャラ: <span id="matchCount" style="color:var(--crimson)">0</span>件</span>
-          <span id="catalogSummary" style="font-size:11px; color:var(--ink-sub)"></span>
+          <span id="catalogSummary" style="font-size:10.5px; color:var(--ink-sub)"></span>
         </div>
         <div style="display:flex; flex-wrap:wrap; gap:6px; align-items:center;">
           <div class="seg-group">
@@ -713,7 +724,7 @@
           <button id="clearSearchBtn" type="button" class="clear-btn" style="display:none" onclick="clearSearch()">✕</button>
         </div>
 
-        <div style="flex:0 1 200px;">
+        <div style="flex:1 1 180px;">
           <select id="sortSelect" class="select-box" aria-label="並び替え">
             <option value="idAsc">図鑑No.昇順 (001→888)</option>
             <option value="idDesc">図鑑No.降順 (888→001)</option>
@@ -970,7 +981,7 @@
         <div style="margin-top:10px; font-size:11.5px; font-weight:800;">
           [管理者専用] TSV一括貼り付け取込（全員に即時反映されます / 形式: <code>図鑑No[TAB]形態番号(1-4)[TAB]体力[TAB]攻撃力[TAB]KB[TAB]速度[TAB]射程[TAB]頻度F[TAB]発生F[TAB]TBAF[TAB]コスト[TAB]再生産F</code>）
         </div>
-        <textarea id="tsvInput" rows="6" style="width:100%; margin-top:4px; border:2px solid var(--ink); border-radius:8px; padding:6px; font-size:11px; font-family:monospace;" placeholder="001	3	540	43	3	10	140	37	8	28	75	60"></textarea>
+        <textarea id="tsvInput" rows="6" style="width:100%; margin-top:4px; border:2px solid var(--ink); border-radius:8px; padding:6px; font-size:16px; font-family:monospace;" placeholder="001	3	540	43	3	10	140	37	8	28	75	60"></textarea>
         <div style="margin-top:6px; display:flex; justify-content:flex-end;">
           <button type="button" class="btn btn-dark" onclick="importTsv()">TSVを取り込んで全員に反映</button>
         </div>
@@ -1013,7 +1024,6 @@
         badge.textContent = "クラウド同期中...";
         badge.classList.remove("offline");
 
-        // リアルタイム監視：管理者が保存すると全閲覧者の画面へ即座に反映
         db.collection(FIRESTORE_COLLECTION).doc(FIRESTORE_DOC_ID).onSnapshot((doc) => {
           if (doc.exists) {
             const payload = doc.data() || {};
@@ -2405,7 +2415,7 @@
         if (state.sortBy === "dpsDesc") return sb.dps - sa.dps;
         if (state.sortBy === "rangeDesc") return fb.range - fa.range;
         if (state.sortBy === "costAsc") return sa.costCh2 - sb.costCh2;
-        if (state.sortBy === "rechAsc") return sa.actualRechF - sb.actualRechF;
+        if (state.sortBy === "rechAsc") return sb.actualRechF - sa.actualRechF;
         if (state.sortBy === "speedDesc") return fb.speed - fa.speed;
         return 0;
       });
